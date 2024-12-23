@@ -1,0 +1,11 @@
+.center {
+  height: calc(100vh - 60px);
+}
+.choose {
+  max-width: 600px;
+  width: 100%;
+}
+.choose select {
+  width: 50%;
+  margin: 0 auto;
+}
