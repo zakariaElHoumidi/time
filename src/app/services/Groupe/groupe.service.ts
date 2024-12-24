@@ -97,6 +97,10 @@ export class GroupeService {
     this.loadGroupsFromLocalStorage()
   }
 
+  removeSelected(): void{
+    this.groups().map((groupe: Groupe) => groupe.selected = false )
+    this.updateLocalStorage()
+  }
   // Local Storage
   public updateLocalStorage(): void {
     localStorage.setItem('groups', JSON.stringify(this.groups()));

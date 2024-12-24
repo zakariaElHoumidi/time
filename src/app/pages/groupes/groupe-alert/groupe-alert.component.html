@@ -1,0 +1,18 @@
+
+<div style="display: block" class="modal fade show">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="statusProjectLabel">{{ title }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetMode()"></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-danger">{{ message }}</h3>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" (click)="resetMode()">{{ cancelText }}</button>
+          <button type="button" class="btn btn-primary" (click)="onConfirm()">{{ confirmText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

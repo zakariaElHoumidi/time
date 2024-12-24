@@ -7,7 +7,6 @@ import {GroupeService} from '../../../services/Groupe/groupe.service';
 import {TacheService} from '../../../services/Tache/tache.service';
 import {Groupe} from '../../../interfaces/groupe.interface';
 import {ObjectKeyPipe} from '../../../pipes/object-key.pipe';
-
 @Component({
   selector: 'app-projects-index',
   standalone: true,
@@ -37,15 +36,14 @@ export class ProjectsIndexComponent {
   filtersByStatus: string = '';
   filtersApply: { [key: string]: any }[] = [];
   groupListActive: Groupe[] = this.groupService.groups().filter((group: Groupe) => group.status === 1);
-  deleteProjectId: number|null = null;
+  projectId: number|null = null;
+  projectStatus: number|null = null;
   selectAll: boolean = false;
-
   generateUniqueID(): number {
     const randomPart = Math.floor(Math.random() * 1000000);
     const timestampPart = Date.now();
     return timestampPart + randomPart;
   }
-
   addMode(): void {
     this.mode = this.Mode.ADD;
   }
@@ -76,14 +74,18 @@ export class ProjectsIndexComponent {
   }
 
   toggleStatus(id_project: number, status_project: number): void {
-    let message = status_project == 1 ? 'desactive' : 'active';
-    let confirmation = confirm(`Are You sure you want ${message} this project ?`)
-
-    if (confirmation) {
-      this.projectService.toggleStatus(id_project);
-    }
+    this.projectId = id_project;
+    this.projectStatus = status_project;
+    this.mode = Mode.CONFIRMATION;
   }
 
+  toggleStatusConfirmation($bool: boolean = false): void {
+    if ($bool && this.projectId) {
+      this.projectService.toggleStatus(this.projectId);
+
+      this.resetMode()
+    }
+  }
   addProject(): void {
     this.projectService.addToList(this.project);
     this.resetMode()
@@ -95,19 +97,18 @@ export class ProjectsIndexComponent {
   }
 
   deleteProject(id_project: number): void{
-    this.deleteProjectId = id_project;
+    this.projectId = id_project;
     this.mode = Mode.DELETE;
   }
 
-
   confirmDelete($bool: boolean = false): void {
-    if ($bool && this.deleteProjectId) {
-      if (this.tacheService.ifAssocierWithTache(this.deleteProjectId)) {
+    if ($bool && this.projectId) {
+      if (this.tacheService.ifAssocierWithTache(this.projectId)) {
         this.mode = Mode.ALERT;
         return;
       }
 
-      this.projectService.deleteProject(this.deleteProjectId!)
+      this.projectService.deleteProject(this.projectId!)
       this.resetMode()
     }
   }

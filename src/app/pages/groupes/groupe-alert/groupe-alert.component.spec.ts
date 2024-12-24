@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GroupeIndexComponent } from './groupe-index.component';
+import { GroupeAlertComponent } from './groupe-alert.component';
 
-describe('GroupeIndexComponent', () => {
-  let component: GroupeIndexComponent;
-  let fixture: ComponentFixture<GroupeIndexComponent>;
+describe('GroupeAlertComponent', () => {
+  let component: GroupeAlertComponent;
+  let fixture: ComponentFixture<GroupeAlertComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GroupeIndexComponent]
+      imports: [GroupeAlertComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GroupeIndexComponent);
+    fixture = TestBed.createComponent(GroupeAlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

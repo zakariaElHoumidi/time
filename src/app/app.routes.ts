@@ -7,7 +7,7 @@ import {HomePageComponent} from './pages/home-page/home-page.component';
 import {AuthLayoutComponent} from './layouts/auth-layout/auth-layout.component';
 import {ProjectsIndexComponent} from './pages/projects/projects-index/projects-index.component';
 import {TachesIndexComponent} from './pages/taches/taches-index/taches-index.component';
-import {GroupeIndexComponent} from './pages/groupes/groupe-index/groupe-index.component';
+import {GroupeShellComponent} from './pages/groupes/groupe-shell/groupe-shell.component';
 
 export const routes: Routes = [
   {
@@ -43,7 +43,7 @@ export const routes: Routes = [
       },
       {
         path: 'group',
-        component: GroupeIndexComponent
+        component: GroupeShellComponent
       },
     ]
   },

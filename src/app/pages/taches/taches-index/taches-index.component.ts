@@ -36,7 +36,8 @@ export class TachesIndexComponent {
   filtersByStatus: string = '';
   filtersApply: { [key: string]: any }[] = [];
   projectListActive: Project[] = this.projectService.projects().filter((project: Project) => project.status === 1);
-  deleteTacheId: number|null = null;
+  tacheId: number|null = null;
+  tacheStatus: number|null = null;
   selectAll: boolean = false;
 
   generateUniqueID(): number {
@@ -77,12 +78,17 @@ export class TachesIndexComponent {
   }
 
   toggleStatus(id_tache: number, status_tache: number): void {
-      let message = status_tache == 1 ? 'desactive' : 'active';
-      let confirmation = confirm(`Are You sure you want ${message} this Tache ?`)
+    this.tacheId = id_tache;
+    this.tacheStatus = status_tache;
+    this.mode = Mode.CONFIRMATION;
+  }
 
-      if (confirmation) {
-        this.tacheService.toggleStatus(id_tache);
-      }
+  toggleStatusConfirmation($bool: boolean = false): void {
+    if ($bool && this.tacheId) {
+      this.tacheService.toggleStatus(this.tacheId);
+
+      this.resetMode()
+    }
   }
 
   addTache(): void {
@@ -96,13 +102,13 @@ export class TachesIndexComponent {
   }
 
   deleteTache(id_tache: number): void{
-    this.deleteTacheId = id_tache;
+    this.tacheId = id_tache;
     this.mode = Mode.DELETE;
   }
 
   confirmDelete($bool: boolean = false): void {
-    if ($bool && this.deleteTacheId) {
-      this.tacheService.deleteTache(this.deleteTacheId)
+    if ($bool && this.tacheId) {
+      this.tacheService.deleteTache(this.tacheId)
       this.resetMode()
     }
   }
