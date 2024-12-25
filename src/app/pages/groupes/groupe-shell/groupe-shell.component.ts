@@ -23,7 +23,6 @@ import {GroupeAlertComponent} from '../groupe-alert/groupe-alert.component';
 export class GroupeShellComponent {
   protected readonly Mode = Mode;
 
-
   mode: Mode = Mode.LIST;
   group: Groupe|null = null;
 

@@ -5,9 +5,9 @@ import {RegisterComponent} from './components/auth/register/register.component';
 import {NotFoundRouteComponent} from './components/exception/not-found-route/not-found-route.component';
 import {HomePageComponent} from './pages/home-page/home-page.component';
 import {AuthLayoutComponent} from './layouts/auth-layout/auth-layout.component';
-import {ProjectsIndexComponent} from './pages/projects/projects-index/projects-index.component';
-import {TachesIndexComponent} from './pages/taches/taches-index/taches-index.component';
 import {GroupeShellComponent} from './pages/groupes/groupe-shell/groupe-shell.component';
+import {ProjectShellComponent} from './pages/projects/project-shell/project-shell.component';
+import {TacheShellComponent} from './pages/taches/tache-shell/tache-shell.component';
 
 export const routes: Routes = [
   {
@@ -35,11 +35,11 @@ export const routes: Routes = [
       },
       {
         path: 'projects',
-        component: ProjectsIndexComponent
+        component: ProjectShellComponent
       },
       {
         path: 'taches',
-        component: TachesIndexComponent
+        component: TacheShellComponent
       },
       {
         path: 'group',

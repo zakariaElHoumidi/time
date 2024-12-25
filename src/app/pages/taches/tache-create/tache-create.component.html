@@ -1,0 +1,41 @@
+<div style="display: block" class="modal fade show">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addTacheLabel">{{ !tache ? "Creation" : "Edit" }} Tache</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetMode()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="add_label" class="form-label">Tache Label</label>
+          <input type="text"
+                 class="form-control shadow-sm"
+                 id="add_label"
+                 placeholder="Label Tache"
+                 [(ngModel)]="newTache.label">
+        </div>
+
+        <div class="mb-3">
+          <label for="add_project" class="form-label">Project</label>
+          <select id="add_project" [(ngModel)]="newTache.project_id" class="form-select shadow-sm">
+            <option [value]=null selected>Choose Project</option>
+            @for(project of projectListActive; track project.id){
+              <option [value]="project.id">{{ project.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        @if(tache){
+          <button class="btn btn-outline-danger ms-3" (click)="deleteTache(tache)">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <button type="button" class="btn btn-info" (click)="toggleStatus(tache)">{{ tache.status == 1 ? 'Desactive': 'Active' }}</button>
+        }
+
+        <button type="button" class="btn btn-secondary" (click)="resetMode()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addOrUpdateTache()">{{ !tache ? "Create" : "Edit" }}</button>
+      </div>
+    </div>
+  </div>
+</div>

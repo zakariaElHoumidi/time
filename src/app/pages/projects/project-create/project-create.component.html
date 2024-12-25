@@ -1,0 +1,41 @@
+<div style="display: block" class="modal fade show">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addProjectLabel">{{ !project ? "Creation Project" : "Edit Project" }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetMode()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="add_label" class="form-label">Project Label</label>
+          <input type="text"
+                 class="form-control shadow-sm"
+                 id="add_label"
+                 placeholder="Label Project"
+                 [(ngModel)]="newProject.label">
+        </div>
+
+        <div class="mb-3">
+          <label for="add_group" class="form-label">Group</label>
+          <select id="add_group" [(ngModel)]="newProject.group_id" class="form-select shadow-sm">
+            <option [value]=null selected>Choose Project</option>
+            @for(group of groupListActive; track group.id){
+              <option [value]="group.id">{{ group.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        @if(project){
+          <button class="btn btn-outline-danger ms-3" (click)="deleteProject(project)">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <button type="button" class="btn btn-info" (click)="toggleStatus(project)">{{ project.status == 1 ? 'Desactive': 'Active' }}</button>
+        }
+
+        <button type="button" class="btn btn-secondary" (click)="resetMode()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addOrUpdateProject()">{{ !project ? "Create" : "Edit" }}</button>
+      </div>
+    </div>
+  </div>
+</div>

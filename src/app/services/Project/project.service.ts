@@ -103,6 +103,12 @@ export class ProjectService {
 
     return !results.includes(true);
   }
+  
+  removeSelected(): void{
+    this.projects().map((project: Project) => project.selected = false )
+    this.updateLocalStorage()
+  }
+
   // Local Storage
   public updateLocalStorage(): void {
     localStorage.setItem('projects', JSON.stringify(this.projects()));

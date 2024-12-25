@@ -105,6 +105,11 @@ export class TacheService {
     return !results.includes(true);
   }
 
+  removeSelected(): void{
+    this.taches().map((tache: Tache) => tache.selected = false )
+    this.updateLocalStorage()
+  }
+
   // Local Storage
   public updateLocalStorage(): void {
     localStorage.setItem('taches', JSON.stringify(this.taches()));

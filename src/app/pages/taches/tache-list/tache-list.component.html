@@ -1,0 +1,122 @@
+<div>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="left">
+      <button class="btn btn-primary me-2 btn-sm"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#filtrage"
+              aria-controls="filtrage">
+        <i class="fa-solid fa-filter"></i>
+      </button>
+
+      @if(filtersApply.length !== 0){
+        @for(filter of filtersApply; track $index) {
+          <button class="btn btn-primary btn-sm">
+            @for(key of filter | objectKey; track $index) {
+              {{ key }} - {{ filter[key] }}
+            }
+          </button>
+        }
+      }
+
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="filtrage" aria-labelledby="filtrageLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="filtrageLabel">Filtrage</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body position-relative">
+          <div>
+            <div class="mb-3">
+              <label for="label" class="form-label">Search By Label</label>
+              <input type="text"
+                     class="form-control shadow-sm"
+                     id="label"
+                     placeholder="Search By Label" [(ngModel)]="filtersByLabel">
+            </div>
+
+            <div class="mb-3">
+              <label for="status" class="form-label">Search By Status</label>
+              <input type="text"
+                     class="form-control shadow-sm"
+                     id="status"
+                     placeholder="Search By Status" [(ngModel)]="filtersByStatus">
+            </div>
+
+            <div class="mb-3 ms-3 position-absolute bottom-0 start-0">
+              <div class="d-flex align-items-center justify-content-around">
+                <button class="btn btn-primary btn-sm" (click)="applyFilter()">Search</button>
+                <button class="btn btn-warning btn-sm ms-3" (click)="resetFilter()">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      @if(selectAll) {
+        <button class="btn btn-danger me-2 btn-sm" (click)="deleteAll()">
+          Delete All
+        </button>
+      }
+
+      <button class="btn btn-success btn-sm"
+              (click)="creationTache(null)">
+        Add Tache
+      </button>
+    </div>
+  </div>
+
+  <table class="table text-center">
+    <thead>
+    <tr>
+      <th scope="col">
+        <div class="form-check d-flex justify-content-center align-items-center">
+          <input class="form-check-input shadow-sm"
+                 [disabled]="tacheService.taches().length === 0"
+                 [(ngModel)]="selectAll"
+                 (change)="toggleSelectAll()"
+                 type="checkbox"
+                 id="deleteAll">
+        </div>
+      </th>
+      <th scope="col">Label</th>
+      <th scope="col">Project</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      @if(tacheService.taches().length !== 0) {
+        @for(tache of tacheService.taches(); track tache.id) {
+          <tr [class]="tache.status === 0 ? 'no-active' : ''">
+            <td>
+              <div class="form-check d-flex justify-content-center align-items-center">
+                <input class="form-check-input shadow-sm"
+                       type="checkbox"
+                       [(ngModel)]="tache.selected"
+                       [disabled]="selectAll && !tache.selected"
+                       id="deleteChoose-{{tache.id}}">
+              </div>
+            </td>
+            <td>{{ tache.label }}</td>
+            <td>{{ tache.project_id ? projectService.getProject(tache.project_id) : '-' }}</td>
+            <td>
+              <button class="btn btn-outline-primary" (click)="creationTache(tache)">
+                <i class="fa-solid fa-edit"></i>
+              </button>
+              <button class="btn btn-outline-danger ms-3" (click)="deleteTache(tache)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+              <button class="btn btn-outline-info ms-3" (click)="toggleStatus(tache)">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      } @else {
+        <tr>
+          <td colspan="4">No Tache Found</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

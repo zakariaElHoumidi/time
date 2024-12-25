@@ -1,20 +1,22 @@
 <div class="container-fluid mt-3">
   @switch (this.mode){
     @case (Mode.LIST){
-      <app-groupe-list (changeMode)="modeChange($event)"/>
+      <app-tache-list (changeMode)="modeChange($event)"/>
     }
     @case (Mode.CREATION){
-      <app-groupe-create (changeMode)="modeChange($event)" [group]="group!"/>
+      <app-tache-create
+        (changeMode)="modeChange($event)"
+        [tache]="tache!" />
     }
     @case (Mode.CONFIRMATION){
-      <app-groupe-alert
+      <app-tache-alert
         (changeMode)="modeChange($event)"
         [title]="title"
         [message]="message"
         [confirmText]="confirmText"
         [cancelText]="'Cancel'"
         [actionType]="action"
-        [group]="group"/>
+        [tache]="tache"/>
     }
     @default {
       Default

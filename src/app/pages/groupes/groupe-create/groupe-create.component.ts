@@ -40,13 +40,7 @@ export class GroupeCreateComponent implements OnInit{
 
   resetMode(): void {
     this.group = null;
-    // this.group = {
-    //   id: this.generateUniqueID(),
-    //   label: '',
-    //   status: 1,
-    //   selected: false
-    // }
-
+    
     const mode = {
       mode: Mode.LIST,
       group: null,
