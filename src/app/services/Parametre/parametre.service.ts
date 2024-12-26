@@ -1,14 +1,23 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParametreService {
-  shouldSelectProject(): boolean {
-    return true;
+
+  isProjectAndTacheRequired(): boolean {
+    return false;
   }
 
-  shouldSelectTache(): boolean {
+  isProjectAndTacheNullable(): boolean {
+    return false;
+  }
+
+  isProjectRequiredAndTacheNullable(): boolean {
+    return false;
+  }
+
+  isProjectNullableAndTacheRequired(): boolean {
     return true;
   }
 }

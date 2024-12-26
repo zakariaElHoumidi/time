@@ -1,0 +1,43 @@
+<div class="choose">
+  <select
+    (change)="onProjectChange()"
+    [disabled]="canExit"
+    [(ngModel)]="selectedProject"
+    id="project"
+    class="form-select shadow-sm">
+    <option [value]=0 selected>Choose Project</option>
+    @for(project of projectService.projects(); track project.id){
+      <option [value]="project.id"> {{ project.label }} </option>
+    }
+  </select>
+
+  <select
+    (change)="onTaskChange()"
+    [disabled]="canExit"
+    [(ngModel)]="selectedTask"
+    id="tache1"
+    class="form-select shadow-sm mt-3">
+    <option [value]=0 selected>Choose Task</option>
+    @for(tache of getTaches(); track tache.id){
+      <option [value]="tache.id"> {{ tache.label }}</option>
+    }
+  </select>
+</div>
+
+<div>
+  @if(isStartButtonVisible){
+    <button
+      [disabled]="isButtonDisabled() || canExit"
+      (click)="onStart()"
+      class="btn btn-success">
+      Entree
+    </button>
+  } @else{
+    <button
+      [disabled]="!canExit"
+      (click)="onSortie()"
+      class="btn btn-danger">
+      Sortie {{ countdown > 0 && !canExit ? '| ' + countdown : '' }}
+    </button>
+  }
+</div>

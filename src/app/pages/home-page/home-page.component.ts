@@ -17,13 +17,14 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './home-page.component.css'
 })
 
-export class HomePageComponent {
+export class HomePageComponent{
   public readonly projectService = inject(ProjectService);
   public readonly parametreService = inject(ParametreService);
   public readonly tacheService = inject(TacheService);
 
   selectedProject: number = 0;
   selectedTask: number = 0;
+
   hasStarted: boolean = false;
   isStartButtonVisible: boolean = true;
   dateTimeEntree: string | null = null;
@@ -35,29 +36,28 @@ export class HomePageComponent {
   projectSelected_label: string|null = null;
   tacheSelected_label: string|null = null;
 
-  private shouldSelectOnlyProject(): boolean {
-    return this.parametreService.shouldSelectProject() && !this.parametreService.shouldSelectTache();
-  }
-
-  private shouldSelectOnlyTache(): boolean {
-    return !this.parametreService.shouldSelectProject() && this.parametreService.shouldSelectTache();
-  }
-
-  private shouldSelectBoth(): boolean {
-    return this.parametreService.shouldSelectProject() && this.parametreService.shouldSelectTache();
-  }
-
-  get isReadyToStart(): boolean {
-    if (this.shouldSelectBoth()) {
-      return this.selectedProject !== 0 && this.selectedTask !== 0;
+  isButtonDisabled(): boolean {
+    if (this.parametreService.isProjectAndTacheRequired()) {
+      return Number(this.selectedProject) === 0 || Number(this.selectedTask) === 0;
     }
-    if (this.shouldSelectOnlyProject()) {
-      return this.selectedProject !== 0;
+    if (this.parametreService.isProjectAndTacheNullable()) {
+      return false;
     }
-    if (this.shouldSelectOnlyTache()) {
-      return this.selectedTask !== 0;
+    if (this.parametreService.isProjectRequiredAndTacheNullable()) {
+      return Number(this.selectedProject) === 0;
     }
+    if (this.parametreService.isProjectNullableAndTacheRequired()) {
+      return Number(this.selectedTask) === 0;
+    }
+
     return false;
+  }
+
+  onProjectChange(): void {
+    this.selectedTask = 0;
+  }
+
+  onTaskChange(): void {
   }
 
   onStart(): void {
@@ -103,7 +103,6 @@ export class HomePageComponent {
 
     return this.projectService.getProject(id_number);
   }
-
 
   getTache(id_tache: string|number|null|undefined): string|null {
     if (!id_tache) {

@@ -8,6 +8,7 @@ import {AuthLayoutComponent} from './layouts/auth-layout/auth-layout.component';
 import {GroupeShellComponent} from './pages/groupes/groupe-shell/groupe-shell.component';
 import {ProjectShellComponent} from './pages/projects/project-shell/project-shell.component';
 import {TacheShellComponent} from './pages/taches/tache-shell/tache-shell.component';
+import {HomeShellComponent} from './pages/home/home-shell/home-shell.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +32,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomePageComponent
+        component: HomeShellComponent
       },
       {
         path: 'projects',
